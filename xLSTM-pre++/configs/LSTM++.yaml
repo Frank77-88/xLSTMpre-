@@ -1,0 +1,77 @@
+model:
+  type: "xtraj_pp"
+  embedding_dim: 32
+  encoder_hidden: 64
+  decoder_hidden: 128
+  input_dim: 4
+  encoder_type: "lstm"
+  dropout: 0.3
+  num_modes: 6
+  use_motion_feedback: true
+
+physics:
+  dt: 0.04
+  ax_max: 9.0
+  psi_dot_max: 1.244
+
+map:
+  map_path: "../dlp-dataset/dlp/parking_map.yml"
+  slot_divider_as_obstacle: true
+  max_slot_divider_segments: 64
+  safety_margin: 1.5
+  use_map_signal: true
+  decoder_local_map_radius: 20.0
+  topology_hidden_dim: 32
+  topology_output_dim: 24
+  topology_k_waypoints: 8
+  topology_k_hard_segments: 8
+  topology_k_polygons: 3
+  topology_refresh_steps: 8
+
+loss:
+  lambda_inertia: 0.0
+  lambda_cls: 0.5
+  winner_metric: "blend"
+  winner_ade_weight: 0.5
+  tau_start: 2.0
+  tau_end: 0.3
+  tau_anneal_epochs: 100
+
+eval:
+  miss_threshold: 2.0
+  batch_size: 32
+
+data:
+  dataset_path: "../dlp-dataset/data"
+  train_scenes: ["DJI_0001", "DJI_0002", "DJI_0003", "DJI_0004", "DJI_0005", "DJI_0006", "DJI_0007", "DJI_0008", "DJI_0009", "DJI_0010", "DJI_0011", "DJI_0012", "DJI_0013", "DJI_0014", "DJI_0015", "DJI_0016"]
+  val_scenes: ["DJI_0021", "DJI_0022"]
+  test_scenes: ["DJI_0028", "DJI_0029"]
+  obs_len: 100
+  pred_len: 100
+  dt: 0.04
+  local_scene_radius: 20.0
+  min_future_displacement: 0.0
+  vehicle_types: ["Car", "Bus", "Truck", "Van"]
+  filter_reverse: false
+  window_stride: 10
+
+training:
+  batch_size: 128
+  num_epochs: 100
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  optimizer: "AdamW"
+  optimizer_fused: "auto"
+  amp: false
+  grad_clip: 1.0
+  num_workers: 8
+  prefetch_factor: 4
+  scheduler:
+    type: "CosineAnnealing"
+    T_max: 100
+    eta_min: 0.00005
+
+logging:
+  log_dir: "logs/LSTM++"
+  checkpoint_dir: "checkpoints/LSTM++"
+  save_interval: 10

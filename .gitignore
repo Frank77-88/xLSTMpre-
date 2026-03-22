@@ -1,0 +1,26 @@
+# Local IDE / editor
+.vscode/
+.idea/
+.kiro/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Large local-only data / cache
+dlp-dataset/data/
+xLSTM-pre++/cache/
+
+# Optional generated artifacts
+# Uncomment if you do not want to upload training outputs
+# xLSTM-pre++/logs/
+# xLSTM-pre++/checkpoints/
+# xLSTM-pre++/visualizations/
